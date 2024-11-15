@@ -1,19 +1,12 @@
 ﻿<h3>Paises</h3>
 
-@page "/countries"
-
-<h3>@Localizer["Countries"]</h3>
-
-<div class="mb-3">
-    <a class="btn btn-primary" href="/countries/create">@Localizer["New"] @Localizer["Country"]</a>
-</div>
-
 <GenericList MyList="Countries">
     <Body>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>@Localizer["Country"]</th>
+                    <th># @Localizer["Teams"]</th>
                     <th></th>
                 </tr>
             </thead>
@@ -23,6 +16,9 @@
                     <tr>
                         <td>
                             @country.Name
+                        </td>
+                        <td>
+                            @country.TeamsCount
                         </td>
                         <td>
                             <a class="btn btn-warning" href="/countries/edit/@country.Id">@Localizer["Edit"]</a>

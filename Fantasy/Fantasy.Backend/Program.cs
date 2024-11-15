@@ -4,6 +4,7 @@ using Fantasy.Backend.Repositories.Interfaces;
 using Fantasy.Backend.UnitsOfWork.Implementations;
 using Fantasy.Backend.UnitsOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnec
 builder.Services.AddScoped(typeof(IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<SeedDb>();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
 
 
 var app = builder.Build();
@@ -26,7 +30,7 @@ void SeedData(WebApplication app)
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
     using var scope = scopedFactory!.CreateScope();
     var service = scope.ServiceProvider.GetService<SeedDb>();
-    service!.SeedAsync().Wait();
+    //service!.SeedAsync().Wait();
 }
 
 

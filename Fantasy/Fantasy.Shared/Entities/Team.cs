@@ -14,5 +14,7 @@ public class Team
 
     public Country Country { get; set; } = null!;
 
+    public int Id { get; set; }
+
     public int CountryId { get; set; }
 }
